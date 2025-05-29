@@ -21,7 +21,7 @@ namespace athia_backend.Controllers
         {
             var companies = await _repo.GetAll();
 
-            return Ok();
+            return Ok(companies);
         }
 
         [HttpGet("{id}")]
@@ -32,11 +32,11 @@ namespace athia_backend.Controllers
             if (company == null)
                 return NotFound();
 
-            return Ok(company.ToCompanyDto());
+            return Ok(company);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CompanyDto company)
+        public async Task<IActionResult> Create([FromBody] CompanyCreateDto company)
         {
             var createdCompany = await _repo.Create(company);
 
@@ -45,14 +45,14 @@ namespace athia_backend.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] CompanyDto company)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] CompanyCreateDto company)
         {
             var updatedCompany = await _repo.Update(id, company);
 
             if (updatedCompany == null)
                 return NotFound();
 
-            return Ok(updatedCompany);
+            return Ok(updatedCompany.ToCompanyDto());
         }
 
         [HttpDelete]

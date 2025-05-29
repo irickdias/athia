@@ -32,7 +32,7 @@ namespace athia_backend.Controllers
             if (sector == null)
                 return NotFound();
 
-            return Ok(sector.ToSectorDto());
+            return Ok(sector);
         }
 
         [HttpPost]
@@ -52,7 +52,7 @@ namespace athia_backend.Controllers
             if (updatedSector == null)
                 return NotFound();
 
-            return Ok(updatedSector);
+            return Ok(updatedSector.ToSectorDto());
         }
 
         [HttpDelete]

@@ -7,7 +7,7 @@ namespace athia_backend.Interfaces
     {
         Task<List<Sector>> GetAll();
         Task<Sector?> GetById(int id);
-        Task<Sector?> Create(SectorDto sectorDto);
+        Task<Sector> Create(SectorDto sectorDto);
         Task<Sector?> Update(int id, SectorDto sectorDto);
         Task<Sector?> Delete(int id);
 
