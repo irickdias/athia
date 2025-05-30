@@ -11,19 +11,12 @@ import { toast } from "react-toastify";
 
 export default function Sectors() {
     const [refreshData, setRefreshData] = useState(1);
-    // select boxes
-    const [departments, setDepartments] = useState([]);
-    const [selectedDep, setSelectedDep] = useState("");
-    const [sectors, setSectors] = useState([]);
-    const [selectedSec, setSelectedSec] = useState("");
 
     // process data
     const [data, setData] = useState<Sector[]>();
 
     // controladores de modais
     const [newSectorModalOpen, setNewSectorModalOpen] = useState(false);
-
-    const [page, setPage] = useState(1);
 
     useEffect(() => {
         getSectors();
@@ -53,7 +46,7 @@ export default function Sectors() {
         // console.log(response.status)
 
         if(response.status == 201) {
-            toast.success("Departamento cadastrado!");
+            toast.success("Setor cadastrado!");
             toast.dismiss(loadingToast);
             setNewSectorModalOpen(false);
             setRefreshData(Math.random());
