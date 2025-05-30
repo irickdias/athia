@@ -18,7 +18,7 @@ export default function SidebarButton(props: SidebarButtonProps) {
     // console.log(props.active.replace(/\//g, ''));
 
     return(
-        <button onClick={() => router.push(props.url)} className={`w-12 h-12 m-2 rounded-sm border-1 border-purple-400 hover:shadow-[0px_1px_10px] hover:shadow-purple-200 transition-all flex items-center justify-center hover:cursor-pointer ${isActive ? 'bg-purple-500' : ''} `}>
+        <button onClick={() => router.push(props.url)} className={`w-12 h-12 m-2 rounded-sm border-1 border-primary hover:shadow-[0px_1px_10px] hover:shadow-purple-200 transition-all flex items-center justify-center hover:cursor-pointer ${isActive ? 'bg-primary-light' : ''} `}>
             {props.icon}
         </button>
     );

@@ -5,7 +5,20 @@ using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(MyAllowSpecificOrigins,
+                          policy =>
+                          {
+                              policy.WithOrigins("http://localhost:3000")
+                                                  .AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                          });
+});
 
 // SERVICES
 builder.Services.AddControllers();
@@ -29,7 +42,7 @@ builder.Services.AddDbContext<ApplicationDBContext>(options => {
 
 var app = builder.Build();
 
-// Cria o banco 'cobdev' a partir da Migration criada, caso ainda n�o existir
+// Cria o banco 'athiadatabase' a partir da Migration criada, caso ainda nao existir
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
@@ -46,6 +59,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 //app.UseAuthorization();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.MapControllers();
 

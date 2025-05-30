@@ -11,9 +11,12 @@ import { toast } from "react-toastify";
 import CustomModal from "../CustomModal";
 // import CustomDeleteAlert from "../CustomDeleteAlert";
 import React from "react";
+import CreateEditCompanySector from "../CreateEditDepartmentSector";
+import CustomDeleteAlert from "../CustomDeleteAlert";
+import { apiUrl } from "@/utils/api";
 
 interface SectorsCardProps {
-    sector: any;
+    sector: Sector;
     setRefreshData: any;
 }
 
@@ -43,33 +46,33 @@ export default function SectorsCard({ sector, setRefreshData }: SectorsCardProps
         setIsOpen(!isOpen);
     };
 
-    // async function handleConfirmEditDepartment() {
-    //     setInputDisabled(true);
+    async function handleConfirmEditSector() {
+        setInputDisabled(true);
 
-    //     const loadingToast = toast.loading("Um momento");
+        const loadingToast = toast.loading("Um momento");
 
-    //     const response = await fetch(`https://localhost:7255/api/department/${department.id}`, {
-    //         method: 'PUT',
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify({ name: editDepValue })
-    //     })
+        const response = await fetch(`${apiUrl}api/sector/${sector.id}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ description: editSecValue })
+        })
 
-    //     // console.log(response.status)
+        // console.log(response.status)
 
-    //     if(response.status == 200) {
-    //         toast.success("Departamento atualizado!");
-    //         resetEditDepInput();
-    //         toast.dismiss(loadingToast);
-    //         setRefreshData(Math.random());
-    //     }
-    //     else {
-    //         toast.error("Ocorreu algo inesperado.");
-    //         toast.dismiss(loadingToast);
-    //         setInputDisabled(false);
-    //     }
-    // }
+        if (response.status == 200) {
+            toast.success("Setor atualizado!");
+            resetEditSecInput();
+            toast.dismiss(loadingToast);
+            setRefreshData(Math.random());
+        }
+        else {
+            toast.error("Ocorreu algo inesperado.");
+            toast.dismiss(loadingToast);
+            setInputDisabled(false);
+        }
+    }
 
     // async function handleConfirmEditSection(sectorId: number) {
     //     setInputDisabled(true);
@@ -127,35 +130,29 @@ export default function SectorsCard({ sector, setRefreshData }: SectorsCardProps
     //     }
     // }
 
-    // async function handleDeleteDepartment() {
-    //     const loadingToast = toast.loading("Um momento");
+    async function handleDeleteSector() {
+        const loadingToast = toast.loading("Um momento");
 
-    //     const response = await fetch(`https://localhost:7255/api/department/${department.id}`, {
-    //         method: 'DELETE',
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         }
-    //     })
+        const response = await fetch(`${apiUrl}api/sector/${sector.id}`, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
 
-    //     // console.log(response.status)
+        // console.log(response.status)
 
-    //     if(response.status == 204) {
-    //         toast.success("Departamento excluído!");
-    //         toast.dismiss(loadingToast);
-    //         setDeleteDepModalOpen(false);
-    //         setRefreshData(Math.random());
-    //     }
-    //     else {
-    //         if(response.status == 400) {
-    //             toast.error("Existem processos atrelados a este departamento.");
-    //         }
-    //         else {
-    //             toast.error("Ocorreu algo inesperado.");
-    //         }
-
-    //         toast.dismiss(loadingToast);
-    //     }
-    // }
+        if (response.status == 204) {
+            toast.success("Setor excluído!");
+            toast.dismiss(loadingToast);
+            setDeleteDepModalOpen(false);
+            setRefreshData(Math.random());
+        }
+        else {
+            toast.error("Ocorreu algo inesperado.");
+            toast.dismiss(loadingToast);
+        }
+    }
 
     // async function handleDeleteSector() {
     //     const loadingToast = toast.loading("Um momento");
@@ -187,11 +184,11 @@ export default function SectorsCard({ sector, setRefreshData }: SectorsCardProps
     //     }
     // }
 
-    // function resetEditDepInput() {
-    //     setEditDep(false);
-    //     setEditDepValue("");
-    //     setInputDisabled(false);
-    // }
+    function resetEditSecInput() {
+        setEditSec(false);
+        setEditSecValue("");
+        setInputDisabled(false);
+    }
 
     // function resetEditSecInput() {
     //     setEditSec(null);
@@ -207,17 +204,30 @@ export default function SectorsCard({ sector, setRefreshData }: SectorsCardProps
 
 
     return (
-        <div className="w-full bg-[#3b3b3b] p-5 rounded-lg shadow-md flex flex-col justify-between items-start">
+        <div className="w-full border-1 border-primary-light dark:border-none dark:bg-[#3b3b3b] p-5 rounded-lg shadow-md flex flex-col justify-between items-start">
             <div className="w-full flex items-center justify-between transition-all">
-                <h2 className="text-xl font-semibold text-purple-300">{sector.name}</h2>
-                <div className="space-x-2">
-                    <button onClick={() => {}} className="p-1 hover:bg-blue-300/80 rounded-sm w-auto transition-all hover:cursor-pointer [&>*]:stroke-gray-300 hover:[&>*]:stroke-blue-700">
-                        <HiOutlinePencilAlt className="w-5 h-5" />
-                    </button>
-                    <button onClick={() => setDeleteDepModalOpen(true)} className="p-1 hover:bg-red-300/80 rounded-sm w-auto transition-all hover:cursor-pointer [&>*]:stroke-gray-300 hover:[&>*]:stroke-red-500">
-                        <HiOutlineTrash className="w-5 h-5" />
-                    </button>
-                </div>
+                {
+                    editSec ?
+                        <CreateEditCompanySector
+                            value={editSecValue}
+                            setValue={setEditSecValue}
+                            onConfirm={handleConfirmEditSector}
+                            onCancel={() => { setEditSec(false), setEditSecValue("") }}
+                        />
+                        :
+                        <>
+                            <h2 className="text-xl font-semibold text-primary dark:text-primary-light">{sector.description}</h2>
+                            <div className="space-x-2">
+                                <button onClick={() => { setEditSec(true) }} className="p-1 hover:bg-blue-300/80 rounded-sm w-auto transition-all hover:cursor-pointer [&>*]:stroke-gray-500 [&>*]:dark:stroke-gray-300 hover:[&>*]:stroke-blue-700">
+                                    <HiOutlinePencilAlt className="w-5 h-5" />
+                                </button>
+                                <button onClick={() => setDeleteSecModalOpen(true)} className="p-1 hover:bg-red-300/80 rounded-sm w-auto transition-all hover:cursor-pointer [&>*]:stroke-gray-500 [&>*]:dark:stroke-gray-300 hover:[&>*]:stroke-red-500">
+                                    <HiOutlineTrash className="w-5 h-5" />
+                                </button>
+                            </div>
+                        </>
+                }
+
             </div>
 
 
@@ -263,7 +273,7 @@ export default function SectorsCard({ sector, setRefreshData }: SectorsCardProps
                                 Não há setores
                             </li>
                     } */}
-                    {/* {
+            {/* {
                         newSec ?
                             <li className="text-gray-300 py-2 pl-5 border-b border-gray-200 flex justify-between">
                                 <CreateEditDepartmentSector
@@ -315,17 +325,17 @@ export default function SectorsCard({ sector, setRefreshData }: SectorsCardProps
                     confirmAction={() => {}}
                 >
                 </CustomDeleteAlert>
-            </CustomModal>
+            </CustomModal> */}
 
-            <CustomModal open={deleteSecModalOpen} onClose={() => { setDeleteSecModalOpen(false), setDeleteSector({ id: null, name: "" }) }}>
+            <CustomModal open={deleteSecModalOpen} onClose={() => { setDeleteSecModalOpen(false) }}>
                 <CustomDeleteAlert
                     title="Deletar setor?"
-                    description={`Você está deletando o setor '${deleteSector.name}'. Caso existam processos atrelados a este setor, a ação não pode ser concluída.`}
-                    cancelAction={() => { setDeleteSecModalOpen(false), setDeleteSector({ id: null, name: "" }) }}
-                    confirmAction={() => {}}
+                    description={`Você está deletando o setor '${sector.description}. Confirmar ação?'`}
+                    cancelAction={() => { setDeleteSecModalOpen(false) }}
+                    confirmAction={() => { handleDeleteSector }}
                 >
                 </CustomDeleteAlert>
-            </CustomModal> */}
+            </CustomModal>
         </div>
     );
 }
