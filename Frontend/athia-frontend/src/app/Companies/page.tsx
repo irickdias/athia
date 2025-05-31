@@ -39,7 +39,7 @@ export default function Companies() {
 
     async function handleConfirm(form: CompanyForm, event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        console.log(form);
+        console.log("sending form", form);
         const loadingToast = toast.loading("Um momento");
 
         const response = await fetch(`${apiUrl}api/company/`, {
@@ -50,8 +50,8 @@ export default function Companies() {
             body: JSON.stringify({
                 socialName: form.socialName,
                 fantasyName: form.fantasyName,
-                cnpj: form.cnpj,
-                sectors: form.sectors
+                cnpj: form.cnpj.replace(/\D/g, ""),
+                sectorIds: form.sectors
             })
         })
 

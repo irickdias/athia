@@ -21,7 +21,7 @@ export default function CustomSelect({ options, value, onChange, placeholder, re
             <select
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                className="w-auto p-1 rounded-sm border-1 border-blue-300 bg-gray-100 dark:bg-gray-700"
+                className="w-auto p-1 rounded-sm border-1 border-primary-light bg-gray-100 dark:bg-gray-700"
                 required={required}
             >
                 {placeholder != null && <option value="" className="text-gray-500">{placeholder}</option>}

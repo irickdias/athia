@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import CustomMultipleCheckBox from "../CustomMultipleCheckBox";
 import { apiUrl } from "@/utils/api";
 import { AiOutlineLoading } from "react-icons/ai";
+import { formatCNPJ } from "@/utils/formatCNPJ";
 
 interface NewCompanyFormProps {
     isUpdate?: boolean;
@@ -16,7 +17,7 @@ export default function NewCompanyForm({isUpdate, initialData, onSubmit, onCance
     const [formData, setFormData] = useState<CompanyForm>({
         socialName: isUpdate && initialData?.socialName ? initialData.socialName : "",
         fantasyName: isUpdate && initialData?.fantasyName ? initialData.fantasyName : "",
-        cnpj: isUpdate && initialData?.cnpj ? initialData.cnpj : "",
+        cnpj: isUpdate && initialData?.cnpj ? formatCNPJ(initialData.cnpj) : "",
         sectors: isUpdate && initialData?.sectors ? initialData.sectors : []
     });
     const [data, setData] = useState<Sector[]>();
@@ -64,7 +65,7 @@ export default function NewCompanyForm({isUpdate, initialData, onSubmit, onCance
                     type="text"
                     placeholder="CNPJ da empresa"
                     value={formData.cnpj}
-                    onChange={(e) => handleChange("cnpj", e.target.value)}
+                    onChange={(e) => handleChange("cnpj", formatCNPJ(e.target.value))}
                     className="w-full p-2 my-2 dark:bg-gray-700 border border-gray-600 rounded-md"
                     required
                 />

@@ -19,7 +19,7 @@ export default function CompaniesCard({ company, setRefreshData }: CompaniesCard
     const [deleteComModalOpen, setDeleteComModalOpen] = useState(false);
     const companySectionsIds: number[] = company.sectors ? company.sectors.map((i) => i.id) : [];
     const [isOpen, setIsOpen] = useState(false);
-    console.log("dsadsadsadsa", companySectionsIds);
+    //console.log("dsadsadsadsa", companySectionsIds);
     const toggleOpen = () => {
         setIsOpen(!isOpen);
     };
@@ -30,6 +30,8 @@ export default function CompaniesCard({ company, setRefreshData }: CompaniesCard
 
         const loadingToast = toast.loading("Um momento");
 
+        console.log(data.cnpj.replace(/\D/g, ""));
+
         const response = await fetch(`${apiUrl}api/company/${company.id}`, {
             method: 'PUT',
             headers: {
@@ -38,8 +40,8 @@ export default function CompaniesCard({ company, setRefreshData }: CompaniesCard
             body: JSON.stringify({
                 socialName: data.socialName,
                 fantasyName: data.fantasyName,
-                cnpj: data.cnpj,
-                sectors: data.sectors
+                cnpj: data.cnpj.replace(/\D/g, ""),
+                sectorIds: data.sectors
             })
         })
 
@@ -48,6 +50,7 @@ export default function CompaniesCard({ company, setRefreshData }: CompaniesCard
         if (response.status == 200) {
             toast.success("Empresa atualizada!");
             toast.dismiss(loadingToast);
+            setEditCompanyModal(false);
             setRefreshData(Math.random());
         }
         else {
@@ -140,16 +143,6 @@ export default function CompaniesCard({ company, setRefreshData }: CompaniesCard
                     />
                 </svg>
             </button >
-
-            {/* <CustomModal open={deleteDepModalOpen} onClose={() => setDeleteDepModalOpen(false)}>
-                        <CustomDeleteAlert
-                            title="Deletar departamento?"
-                            description={`Você está deletando o departamento '${''}' e seus setores. Caso existam processos atrelados a este departamento, a ação não pode ser concluída.`}
-                            cancelAction={() => setDeleteDepModalOpen(false)}
-                            confirmAction={() => {}}
-                        >
-                        </CustomDeleteAlert>
-                    </CustomModal> */}
 
             < CustomModal open={editCompanyModal} onClose={() => setEditCompanyModal(false) }>
                 <NewCompanyForm 

@@ -17,6 +17,7 @@ namespace athia_backend.Models
 
         [Required]
         [StringLength(14)]
+        [Column(TypeName = "varchar(14)")]
         public string Cnpj { get; set; } = string.Empty;
 
         public ICollection<Sector> Sectors { get; set; } = new List<Sector>();
