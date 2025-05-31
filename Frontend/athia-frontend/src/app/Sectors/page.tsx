@@ -70,7 +70,7 @@ export default function Sectors() {
     ]
 
     return(
-        <section className="relative min-h-[800px] mx-5 mb-2 p-5 bg-gray-200 dark:bg-dark rounded-sm">
+        <section className="relative min-h-[800px] mx-5 mb-2 p-5 bg-gray-100 dark:bg-dark rounded-sm shadow-md">
             <div className="w-full relative flex justify-between">
                 <h1 className="text-2xl">Setores</h1>
                 <div className="w-70 flex justify-end relative">

@@ -7,7 +7,7 @@ interface Option {
 }
 
 interface CustomMultipleCheckBoxProps {
-    options: Option[];
+    options: Sector[];
     selectedIds: number[];
     onChange: (newSelectedIds: number[]) => void;
 }
@@ -32,7 +32,7 @@ export default function CustomMultipleCheckBox({ options, selectedIds, onChange 
                         className="flex items-center gap-2 cursor-pointer select-none"
                     >
                         <div
-                            className={`w-5 h-5 border-2 rounded-sm flex items-center justify-center transition-all ${isChecked ? "bg-green-800 border-green-800" : "bg-white border-green-500"}`}
+                            className={`w-5 h-5 border-2 rounded-sm flex items-center justify-center transition-all ${isChecked ? "bg-green-700 border-green-700" : "bg-transparent border-green-500"}`}
                         >
                             {isChecked && (
                                 <svg
@@ -49,7 +49,7 @@ export default function CustomMultipleCheckBox({ options, selectedIds, onChange 
                             )}
                         </div>
                         <span className="text-sm font-medium text-gray-900 dark:text-gray-300">
-                            {opt.label}
+                            {opt.description}
                         </span>
                     </div>
                 );

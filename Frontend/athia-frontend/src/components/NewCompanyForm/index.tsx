@@ -1,7 +1,9 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomMultipleCheckBox from "../CustomMultipleCheckBox";
+import { apiUrl } from "@/utils/api";
+import { AiOutlineLoading } from "react-icons/ai";
 
 interface NewCompanyFormProps {
     isUpdate?: boolean;
@@ -17,10 +19,23 @@ export default function NewCompanyForm({isUpdate, initialData, onSubmit, onCance
         cnpj: isUpdate && initialData?.cnpj ? initialData.cnpj : "",
         sectors: isUpdate && initialData?.sectors ? initialData.sectors : []
     });
+    const [data, setData] = useState<Sector[]>();
+
+    useEffect(() => {
+        getSectors();
+    }, [])
 
     const handleChange = (key: keyof CompanyForm, value: any) => {
         setFormData((prev) => ({ ...prev, [key]: value }));
     };
+
+    async function getSectors() {
+        let request = await fetch(`${apiUrl}api/sector/`);
+        let json = await request.json();
+        setData(json);
+        // console.log("adasdas", json);
+        // console.log("adasdas", json[0].name);
+    }
 
     return(
         <form onSubmit={(e) => onSubmit(formData, e)} className="min-w-100">
@@ -55,9 +70,14 @@ export default function NewCompanyForm({isUpdate, initialData, onSubmit, onCance
                 />
 
                 <p className="my-2">Adicionar Setores:</p>
-                <div className="flex w-auto">
-                    <CustomMultipleCheckBox options={[{id: 1, label: 'dsadsadsada'}, {id: 2, label: 'adfsfsfsfds'}]} selectedIds={formData.sectors} onChange={(e) => handleChange("sectors", e)} />
-                </div>
+                {
+                    data && data.length > 0 ?
+                    <div className="flex w-auto max-h-[400px] overflow-auto">
+                        <CustomMultipleCheckBox options={data} selectedIds={formData.sectors} onChange={(e) => handleChange("sectors", e)} />
+                    </div>
+                    :
+                    <AiOutlineLoading className="w-4 h-4 animate-spin"/>
+                }
 
 
                 <div className="mt-8 flex justify-center space-x-2">

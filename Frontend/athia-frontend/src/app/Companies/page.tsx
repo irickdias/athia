@@ -18,7 +18,7 @@ export default function Companies() {
     const [newCompanyModalOpen, setNewCompanyModalOpen] = useState(false);
 
     useEffect(() => {
-        //getCompanies();
+        getCompanies();
     }, [refreshData])
 
     async function getCompanies() {
@@ -29,41 +29,49 @@ export default function Companies() {
         // console.log("adasdas", json[0].name);
     }
 
+    async function getSectors() {
+        let request = await fetch(`${apiUrl}api/sector/`);
+        let json = await request.json();
+        setData(json);
+        // console.log("adasdas", json);
+        // console.log("adasdas", json[0].name);
+    }
+
     async function handleConfirm(form: CompanyForm, event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        console.log(form)
-        // const loadingToast = toast.loading("Um momento");
+        console.log(form);
+        const loadingToast = toast.loading("Um momento");
 
-        // const response = await fetch(`${apiUrl}api/company/`, {
-        //     method: 'POST',
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify({
-        //         socialName: form.socialName,
-        //         fantasyName: form.fantasyName,
-        //         cnpj: form.cnpj,
-        //         sectors: form.sectors
-        //     })
-        // })
+        const response = await fetch(`${apiUrl}api/company/`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                socialName: form.socialName,
+                fantasyName: form.fantasyName,
+                cnpj: form.cnpj,
+                sectors: form.sectors
+            })
+        })
 
-        // // console.log(response.status)
+        // console.log(response.status)
 
-        // if (response.status == 201) {
-        //     toast.success("Empresa cadastrada!");
-        //     toast.dismiss(loadingToast);
-        //     setNewCompanyModalOpen(false);
-        //     setRefreshData(Math.random());
-        // }
-        // else {
-        //     toast.error("Ocorreu algo inesperado.");
-        //     toast.dismiss(loadingToast);
-        // }
+        if (response.status == 201) {
+            toast.success("Empresa cadastrada!");
+            toast.dismiss(loadingToast);
+            setNewCompanyModalOpen(false);
+            setRefreshData(Math.random());
+        }
+        else {
+            toast.error("Ocorreu algo inesperado.");
+            toast.dismiss(loadingToast);
+        }
         // console.log("concluido", newDepValue);
     }
 
     return (
-        <section className="relative min-h-[800px] mx-5 mb-2 p-5 bg-gray-200 dark:bg-dark rounded-sm">
+        <section className="relative min-h-[800px] mx-5 mb-2 p-5 bg-gray-100 dark:bg-dark rounded-sm shadow-md">
             <div className="w-full relative flex justify-between">
                 <h1 className="text-2xl">Empresas</h1>
                 <div className="w-70 flex justify-end relative">

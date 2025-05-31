@@ -330,7 +330,7 @@ export default function SectorsCard({ sector, setRefreshData }: SectorsCardProps
             <CustomModal open={deleteSecModalOpen} onClose={() => { setDeleteSecModalOpen(false) }}>
                 <CustomDeleteAlert
                     title="Deletar setor?"
-                    description={`Você está deletando o setor '${sector.description}. Confirmar ação?'`}
+                    description={`Você está deletando o setor '${sector.description}'. Confirmar ação?`}
                     cancelAction={() => { setDeleteSecModalOpen(false) }}
                     confirmAction={() => { handleDeleteSector }}
                 >
