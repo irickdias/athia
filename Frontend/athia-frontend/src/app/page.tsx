@@ -3,6 +3,7 @@
 import CustomSearch from "@/components/CustomSearch";
 import CustomSelect from "@/components/CustomSelect";
 import PaginationNavigator from "@/components/PaginationNavigator";
+import ReportsTable from "@/components/ReportsTable";
 import { apiUrl } from "@/utils/api";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -11,7 +12,7 @@ import { toast } from "react-toastify";
 export default function Home() {
   const [_, setUpdatingData] = useState(false);
   const [refreshData, setRefreshData] = useState(0);
-  const [data, setData] = useState<any>("");
+  const [data, setData] = useState<Reports | any>("");
   const [filterBy, setFilterBy] = useState(1);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
@@ -28,11 +29,11 @@ export default function Home() {
   ]
 
   useEffect(() => {
-    //getComSec();
+    getReports();
   }, [refreshData, page]);
 
 
-  async function getComSec() {
+  async function getReports() {
     setUpdatingData(true);
     try {
 
@@ -66,8 +67,12 @@ export default function Home() {
             {/* <p>Filtrar por:</p> */}
             <CustomSelect options={filters} value={filterBy} onChange={(e: any) => { setFilterBy(e), setSearch("") }} required={false} />
           </div>
-          <PaginationNavigator totalPages={data.totalPages} currentPage={page} onPageChange={setPage} />
+          <PaginationNavigator totalPages={data?.totalPages} currentPage={page} onPageChange={setPage} />
         </div>
+      </div>
+
+      <div className="mt-4">
+          <ReportsTable reports={data.data}/>
       </div>
     </section>
   );
