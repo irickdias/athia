@@ -60,6 +60,7 @@ export default function CompaniesCard({ company, setRefreshData }: CompaniesCard
     }
 
     async function handleDeleteCompany() {
+        console.log("passou aqui");
         const loadingToast = toast.loading("Um momento");
 
         const response = await fetch(`${apiUrl}api/company/${company.id}`, {
@@ -163,7 +164,7 @@ export default function CompaniesCard({ company, setRefreshData }: CompaniesCard
                     title="Deletar empresa?"
                     description={`Você está deletando a empresa '${company.socialName}'. Confirmar ação?`}
                     cancelAction={() => { setDeleteComModalOpen(false) }}
-                    confirmAction={() => { handleDeleteCompany }}
+                    confirmAction={() => { handleDeleteCompany() }}
                 >
                 </CustomDeleteAlert>
             </CustomModal>

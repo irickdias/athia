@@ -22,7 +22,7 @@ namespace athia_backend.Repository
             var reportsQuery = _context.Companies.Include(c => c.Sectors).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(query.company))
-                reportsQuery = reportsQuery.Where(c => c.SocialName == query.company);
+                reportsQuery = reportsQuery.Where(c => c.SocialName.Contains(query.company));
 
             if (!string.IsNullOrWhiteSpace(query.sector))
                 reportsQuery = reportsQuery.Where(c => c.Sectors.Any(s => s.Description.Contains(query.sector)));

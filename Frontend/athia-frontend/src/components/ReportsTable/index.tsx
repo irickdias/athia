@@ -6,7 +6,7 @@ interface ReportsTableProps {
 
 export default function ReportsTable({ reports }: ReportsTableProps) {
     return (
-        <table className="[&>thead]:border-b-1 [&>*>tr>td]:p-2 [&>tbody>tr:nth-child(even)]:bg-gray-100 [&>tbody>tr:nth-child(even)]:dark:bg-gray-900 w-full">
+        <table className="[&>thead]:border-b-1 [&>*>tr>td]:p-2 [&>tbody>tr:nth-child(even)]:bg-gray-200 [&>tbody>tr:nth-child(even)]:dark:bg-[#3b3b3b] w-full">
             <thead className="font-semibold text-left [&>tr>th]:p-2">
                 <tr>
                     <th>Nome</th>
