@@ -8,6 +8,7 @@ import CustomDeleteAlert from "../CustomDeleteAlert";
 import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
 import React from "react";
 import NewCompanyForm from "../NewCompanyForm";
+import { Tooltip } from "react-tooltip";
 
 interface CompaniesCardProps {
     company: Company;
@@ -19,7 +20,7 @@ export default function CompaniesCard({ company, setRefreshData }: CompaniesCard
     const [deleteComModalOpen, setDeleteComModalOpen] = useState(false);
     const companySectionsIds: number[] = company.sectors ? company.sectors.map((i) => i.id) : [];
     const [isOpen, setIsOpen] = useState(false);
-    
+
     const toggleOpen = () => {
         setIsOpen(!isOpen);
     };
@@ -89,10 +90,24 @@ export default function CompaniesCard({ company, setRefreshData }: CompaniesCard
             <div className="w-full flex items-center justify-between transition-all">
                 <h2 className="text-xl font-semibold text-primary dark:text-primary-light">{company.socialName}</h2>
                 <div className="space-x-2">
-                    <button onClick={() => { setEditCompanyModal(true) }} className="p-1 hover:bg-blue-300/80 rounded-sm w-auto transition-all hover:cursor-pointer [&>*]:stroke-gray-500 [&>*]:dark:stroke-gray-300 hover:[&>*]:stroke-blue-700">
+                    <button 
+                      onClick={() => { setEditCompanyModal(true) }} 
+                      className="p-1 hover:bg-blue-300/80 rounded-sm w-auto transition-all hover:cursor-pointer [&>*]:stroke-gray-500 [&>*]:dark:stroke-gray-300 hover:[&>*]:stroke-blue-700"
+                      data-tooltip-id={`edit-company-${company.id}`}
+                      data-tooltip-content="Editar"
+                      data-tooltip-place="top"
+                      data-tooltip-delay-show={300}
+                    >
                         <HiOutlinePencilAlt className="w-5 h-5" />
                     </button>
-                    <button onClick={() => setDeleteComModalOpen(true)} className="p-1 hover:bg-red-300/80 rounded-sm w-auto transition-all hover:cursor-pointer [&>*]:stroke-gray-500 [&>*]:dark:stroke-gray-300 hover:[&>*]:stroke-red-500">
+                    <button 
+                      onClick={() => setDeleteComModalOpen(true)} 
+                      className="p-1 hover:bg-red-300/80 rounded-sm w-auto transition-all hover:cursor-pointer [&>*]:stroke-gray-500 [&>*]:dark:stroke-gray-300 hover:[&>*]:stroke-red-500"
+                      data-tooltip-id={`delete-company-${company.id}`}
+                      data-tooltip-content="Deletar"
+                      data-tooltip-place="top"
+                      data-tooltip-delay-show={300}
+                    >
                         <HiOutlineTrash className="w-5 h-5" />
                     </button>
                 </div>
@@ -168,6 +183,9 @@ export default function CompaniesCard({ company, setRefreshData }: CompaniesCard
                 >
                 </CustomDeleteAlert>
             </CustomModal>
+
+            <Tooltip id={`edit-company-${company.id}`} />
+            <Tooltip id={`delete-company-${company.id}`} />
         </div >
     );
 }

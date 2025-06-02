@@ -14,6 +14,7 @@ import React from "react";
 import CreateEditCompanySector from "../CreateEditDepartmentSector";
 import CustomDeleteAlert from "../CustomDeleteAlert";
 import { apiUrl } from "@/utils/api";
+import { Tooltip } from "react-tooltip";
 
 interface SectorsCardProps {
     sector: Sector;
@@ -100,10 +101,24 @@ export default function SectorsCard({ sector, setRefreshData }: SectorsCardProps
                         <>
                             <h2 className="text-xl font-semibold text-primary dark:text-primary-light">{sector.description}</h2>
                             <div className="space-x-2">
-                                <button onClick={() => { setEditSec(true) }} className="p-1 hover:bg-blue-300/80 rounded-sm w-auto transition-all hover:cursor-pointer [&>*]:stroke-gray-500 [&>*]:dark:stroke-gray-300 hover:[&>*]:stroke-blue-700">
+                                <button 
+                                  onClick={() => { setEditSec(true) }} 
+                                  className="p-1 hover:bg-blue-300/80 rounded-sm w-auto transition-all hover:cursor-pointer [&>*]:stroke-gray-500 [&>*]:dark:stroke-gray-300 hover:[&>*]:stroke-blue-700"
+                                  data-tooltip-id={`edit-sector-${sector.id}`}
+                                  data-tooltip-content="Editar"
+                                  data-tooltip-place="top"
+                                  data-tooltip-delay-show={300}
+                                >
                                     <HiOutlinePencilAlt className="w-5 h-5" />
                                 </button>
-                                <button onClick={() => setDeleteSecModalOpen(true)} className="p-1 hover:bg-red-300/80 rounded-sm w-auto transition-all hover:cursor-pointer [&>*]:stroke-gray-500 [&>*]:dark:stroke-gray-300 hover:[&>*]:stroke-red-500">
+                                <button 
+                                  onClick={() => setDeleteSecModalOpen(true)} 
+                                  className="p-1 hover:bg-red-300/80 rounded-sm w-auto transition-all hover:cursor-pointer [&>*]:stroke-gray-500 [&>*]:dark:stroke-gray-300 hover:[&>*]:stroke-red-500"
+                                  data-tooltip-id={`delete-sector-${sector.id}`}
+                                  data-tooltip-content="Deletar"
+                                  data-tooltip-place="top"
+                                  data-tooltip-delay-show={300}
+                                >
                                     <HiOutlineTrash className="w-5 h-5" />
                                 </button>
                             </div>
@@ -121,6 +136,9 @@ export default function SectorsCard({ sector, setRefreshData }: SectorsCardProps
                 >
                 </CustomDeleteAlert>
             </CustomModal>
+
+            <Tooltip id={`edit-sector-${sector.id}`} />
+            <Tooltip id={`delete-sector-${sector.id}`} />
         </div>
     );
 }

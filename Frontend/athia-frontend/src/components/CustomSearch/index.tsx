@@ -12,6 +12,7 @@ export default function CustomSearch({ search, setSearch, setUpdateData, setPage
         <div className="w-full flex relative border-1 border-primary-light bg-gray-100 dark:bg-gray-700 rounded-sm p-1 transition-all">
             <input
                 type="text"
+                placeholder="Digite sua pesquisa"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full focus:outline-none"

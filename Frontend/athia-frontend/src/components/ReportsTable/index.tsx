@@ -1,3 +1,4 @@
+import { formatCNPJ } from "@/utils/formatCNPJ";
 import React from "react";
 
 interface ReportsTableProps {
@@ -32,7 +33,7 @@ export default function ReportsTable({ reports, filterBy, search }: ReportsTable
                                     <tr key={key}>
                                         <td>{company.socialName}</td>
                                         <td>{company.fantasyName}</td>
-                                        <td>{company.cnpj}</td>
+                                        <td>{formatCNPJ(company.cnpj)}</td>
                                         <td>{matchingSector.description}</td>
                                     </tr>
                                 );
@@ -43,7 +44,7 @@ export default function ReportsTable({ reports, filterBy, search }: ReportsTable
                                             <tr key={i}>
                                                 <td>{company.socialName}</td>
                                                 <td>{company.fantasyName}</td>
-                                                <td>{company.cnpj}</td>
+                                                <td>{formatCNPJ(company.cnpj)}</td>
                                                 <td>{sector.description}</td>
                                             </tr>
                                         ))}
