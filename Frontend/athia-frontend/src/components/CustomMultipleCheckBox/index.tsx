@@ -1,10 +1,3 @@
-import { useState } from "react";
-import { FaCheck } from "react-icons/fa";
-
-interface Option {
-    id: number;
-    label: string;
-}
 
 interface CustomMultipleCheckBoxProps {
     options: Sector[];

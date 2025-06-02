@@ -19,7 +19,7 @@ export default function CompaniesCard({ company, setRefreshData }: CompaniesCard
     const [deleteComModalOpen, setDeleteComModalOpen] = useState(false);
     const companySectionsIds: number[] = company.sectors ? company.sectors.map((i) => i.id) : [];
     const [isOpen, setIsOpen] = useState(false);
-    //console.log("dsadsadsadsa", companySectionsIds);
+    
     const toggleOpen = () => {
         setIsOpen(!isOpen);
     };

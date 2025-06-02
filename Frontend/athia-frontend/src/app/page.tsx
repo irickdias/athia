@@ -58,21 +58,21 @@ export default function Home() {
   }
 
   return (
-    <section className="relative min-h-[800px] mx-5 mb-2 p-5 bg-gray-100 dark:bg-dark rounded-sm shadow-md">
+    <section className="relative h-[820px] overflow-auto mx-5 mb-2 p-5 bg-gray-100 dark:bg-dark rounded-sm shadow-md">
       <div className="w-full relative space-y-4 flex flex-col">
         <h1 className="text-2xl">Relatório</h1>
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <CustomSearch search={search} setSearch={setSearch} setUpdateData={setRefreshData} setPage={setPage}/>
             {/* <p>Filtrar por:</p> */}
-            <CustomSelect options={filters} value={filterBy} onChange={(e: any) => { setFilterBy(e), setSearch("") }} required={false} />
+            <CustomSelect options={filters} value={filterBy} onChange={(e: any) => { setFilterBy(e), setSearch(""), setRefreshData(Math.random()) }} required={false} />
           </div>
           <PaginationNavigator totalPages={data?.totalPages} currentPage={page} onPageChange={setPage} />
         </div>
       </div>
 
       <div className="mt-4">
-          <ReportsTable reports={data.data}/>
+          <ReportsTable reports={data.data} filterBy={filterBy} search={search}/>
       </div>
     </section>
   );

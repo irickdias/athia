@@ -10,11 +10,7 @@ import { toast } from "react-toastify";
 
 export default function Companies() {
     const [refreshData, setRefreshData] = useState(1);
-
-    // process data
     const [data, setData] = useState<Company[]>();
-
-    // controladores de modais
     const [newCompanyModalOpen, setNewCompanyModalOpen] = useState(false);
 
     useEffect(() => {
@@ -39,7 +35,7 @@ export default function Companies() {
 
     async function handleConfirm(form: CompanyForm, event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        console.log("sending form", form);
+
         const loadingToast = toast.loading("Um momento");
 
         const response = await fetch(`${apiUrl}api/company/`, {
@@ -55,8 +51,6 @@ export default function Companies() {
             })
         })
 
-        // console.log(response.status)
-
         if (response.status == 201) {
             toast.success("Empresa cadastrada!");
             toast.dismiss(loadingToast);
@@ -67,11 +61,10 @@ export default function Companies() {
             toast.error("Ocorreu algo inesperado.");
             toast.dismiss(loadingToast);
         }
-        // console.log("concluido", newDepValue);
     }
 
     return (
-        <section className="relative min-h-[800px] mx-5 mb-2 p-5 bg-gray-100 dark:bg-dark rounded-sm shadow-md">
+        <section className="relative min-h-[820px] mx-5 mb-2 p-5 bg-gray-100 dark:bg-dark rounded-sm shadow-md">
             <div className="w-full relative flex justify-between">
                 <h1 className="text-2xl">Empresas</h1>
                 <div className="w-70 flex justify-end relative">
@@ -94,16 +87,6 @@ export default function Companies() {
                             :
                             <></>
                     }
-                    {/* {
-                                    mock.length > 0 ?
-                                    (
-                                        mock.map((item: Sector, key: number) => (
-                                            <SectorsCard sector={item} setRefreshData={setRefreshData}/>
-                                        ))
-                                    )
-                                    :
-                                    <></>
-                                } */}
                 </div>
             </div>
 

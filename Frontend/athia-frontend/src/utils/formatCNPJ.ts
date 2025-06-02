@@ -1,10 +1,6 @@
 export function formatCNPJ(value: string): string {
-    // Remove tudo que não for dígito
     const digits = value.replace(/\D/g, "").slice(0, 14); // no máximo 14
-    
-    // console.log("teste", digits);
 
-    // Aplica a máscara progressivamente
     const parts = [];
 
     if (digits.length > 0) parts.push(digits.slice(0, 2));
@@ -13,7 +9,6 @@ export function formatCNPJ(value: string): string {
     if (digits.length >= 9) parts.push(digits.slice(8, 12));
     if (digits.length >= 13) parts.push(digits.slice(12, 14));
 
-    // Monta a string formatada
     let formatted = parts[0] || "";
     if (parts[1]) formatted += "." + parts[1];
     if (parts[2]) formatted += "." + parts[2];
